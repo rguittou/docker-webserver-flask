@@ -3,7 +3,7 @@
 #Version 0.0.1
 #
 
-From fedora_wb_flask:latest
+From fedora:23
 MAINTAINER RABAH GUITTOUNE
 
 #Updating system
