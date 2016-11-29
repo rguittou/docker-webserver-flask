@@ -7,55 +7,30 @@ FROM fedora:23
 
 MAINTAINER RABAH GUITTOUNE
 
-#Updating system
-run dnf -y update
+#Updating system &&Installing basic tools
+RUN dnf -y update \
+    && dnf install -y tar \
+    && python3 -V \
+    && dnf install -y git python-pip \
+    && python3 -m pip install -U pip \
 
-#Installing basic tools
-run dnf install -y tar
+COPY requirements.txt /
+RUN  pip3 install -r /requirements.txt
 
-#Print python version
-run python3 -V
+RUN mkdir -p /home/dev/web_server_flask
+WORKDIR /home/dev/web_server_flask
+COPY hello.py .
+COPY README.md web_server_flask
+ADD templates /home/dev/web_server_flask/templates
+ADD static /home/dev/web_server_flask/static
 
-#Installing git
-run dnf install -y git
-
-#Installing python and Basic Python tools
-run yum  install -y  python-pip
-
-#iNSTALLING PIP3
-run python3 -m pip install -U pip
-
-# Download and install Flask framework
-run pip3 install flask
-
-#Install flask_script
-run pip3 install flask_script
-
-#Install flask_bootstrap
-run pip3 install flask_bootstrap
-
-#Install flask_moment
-run pip3 install flask_moment
-
-#Install flask_wtf
-run pip3 install flask_wtf
-
-#Create python dev dir
-run mkdir /home/py_dev
-#Move in py_dir
-run cd /home/py_dev/
-
-run git clone https://github.com/astondevops/web_server_flask.git /home/py_dev/
-
-#Expose ports
 EXPOSE 5000
 
 #Clean-up
 run dnf clean all
-
 #Move in web_server dir
 WORKDIR /home/py_dev/
 #CMD python3 hello.py runserver
 ENTRYPOINT ["python3","hello.py","runserver"]
 CMD ["-h=0.0.0.0"]
-#ENTRYPOINT ["python3","hello.py","runserver",-h:0.0.0.0]
+
