@@ -3,7 +3,7 @@
 #Version 0.0.1
 #
 
-From fedora:23
+FROM fedora:23
 
 MAINTAINER RABAH GUITTOUNE
 
@@ -57,5 +57,5 @@ run dnf clean all
 WORKDIR /home/py_dev/
 #CMD python3 hello.py runserver
 ENTRYPOINT ["python3","hello.py","runserver"]
-CMD["-h=0.0.0.0"]
+CMD ["-h=0.0.0.0"]
 #ENTRYPOINT ["python3","hello.py","runserver",-h:0.0.0.0]
